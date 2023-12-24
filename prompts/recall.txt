@@ -1,0 +1,48 @@
+You are a brilliant AI assistant.
+You receive a reference text and a claim. Note that the 'answer' in the reference text means the model-generated answer or the correct answer.
+You need to think step by step for verifying whether the claim is true or false. If a claim is either explicitly mentioned in the reference text or logically deducible from it, then the claim is true; otherwise, it is false.
+Here are some examples:
+[example 1 start]
+<reference text>
+The model-generated answer gives the wrong step. It is suggested to check the reasoning steps.
+
+<claim>
+The model-generated answer is wrong.
+
+<verify claim>
+The reference text points that the model-generated answer contains the wrong step, so the model-generated answer is wrong.
+The claim states that the model-generated answer is wrong. It is consistent with the above reasoning result. Therefore, the claim is true.
+[example 1 end]
+[example 2 start]
+<reference text>
+The model-generated answer is not right, because it provides the wrong analysis. The correct answer should be Option A.
+
+<claim>
+The correct answer should point out the invented fact.
+
+<verify claim>
+The reference text states that the correct answer should be Option A.
+The claim states that the correct answer should point out the invented fact. The claim is not mentioned or implied in the reference text. Therefore, the claim is false.
+[example 2 end]
+[example 3 start]
+<reference text>
+The answer lacks detail and context, like the age of the victim, the place of the incident and so on.
+
+<claim>
+The accurate summary should contain the age of the dead person.
+
+<verify claim>
+The reference text states that the model-generated answer lacks the detail, the age of victim.
+The claim states that the correct summary should contain the age of the dead person. It means that the model-generated answer is not mentioned the age of victim. The claim can be logically deducible from the reference text. Therefore, the claim is true.
+[example 3 end]
+[example 4 start]
+<reference text>
+The answer could be more concise and focused.
+
+<claim>
+The model-generated answer is mostly correct, but it could be improved by providing more specific details.
+
+<verify claim>
+The reference text states that the model-generated answer could be more concise. It means that the model-generated answer is elaborated.
+The claim states that the model-generated answer could be improved by providing more specific details. It means that the model-generated answer is brief. The claim contracts with the reference text. Therefore, the claim is false.
+[example 4 end]

@@ -1,0 +1,40 @@
+You are a brilliant AI assistant.
+You receive a critique as the input, which is the critical comment for an input question and a model-generated answer.
+You need to generate all check-worthy claims of the critique.
+A claim is an atomic statement that only contains a fine-grained information unit of a critique.
+Each claim should be concise (a sentence) and self-contained.
+Note that the 'answer' in the critique means the model-generated answer or the correct answer.
+Some examples are as following:
+[example 1 start]
+input:
+The answer violates basic principles of common sense. Flour is not sweet. Dusting it onto the bread would not sweeten the bread. Therefore, the right answer is to dust powdered sugar; sugar is, of course, sweet.
+claims:
+The model-generated answer violates basic principles of common sense that flour is not sweet.
+Dusting Flour onto the bread would not sweeten the bread.
+The correct answer is to dust powdered sugar.
+Sugar is sweet.
+[example 1 end]
+[example 2 start]
+input:
+The output makes a logical error in the first bullet point of the answer, where it rejects the possibility of sunlight being the right answer. While sunlight might be produced in the sun, it doesn't stay there. Since sunlight comes to earth, it is on earth itself. Therefore sunlight, option 2, is the right answer as sunlight which is the oldest heat source on Earth.
+claims:
+The model-generated answer makes a logical error in rejecting the possibility of sunlight being the right answer.
+Sunlight might be produced in the sun.
+Sunlight doesn't stay in the sun.
+Sunlight comes to earth.
+Sunlight is on earth itself.
+Sunlight, option 2, is the right answer as it is the oldest heat source on Earth.
+[example 2 end]
+[example 3 start]
+input:
+That the increase has "reached record levels" is not indicated in the context. Otherwise, the answer is adequate, except it should also mention the government is responding to the situation.
+claims:
+The content that the increase has "reached record levels" is not indicated in the context.
+The correct answer should also mention the government is responding to the situation.
+[example 3 end]
+[example 4 start]
+input:
+The answer's summary was missing information about Andre Ward winning the rematch.
+claims:
+The model-generated answer was missing information about Andre Ward winning the rematch
+[example 4 end]

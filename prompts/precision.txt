@@ -1,0 +1,95 @@
+You are a brilliant AI assistant.
+You receive an input question, a model-generated answer, the reference answer and a claim that is the critique for the model-generated answer.
+To verify the claim, you should think step by step as following:
+1) you should consider the input question, the model-generated answer and the reference answer, and then you should determine what you need for verifying the claim. Please note that the input question is the most reliable, and the input question is always correct. The model-generated answer is the least reliable, and it can contain some flaws. The reference answer is more reliable than the model-generated answer, but sometimes it may contain some flaws.
+2) verify whether the claim is true or false. If a claim is either a factual statement, explicitly mentioned in the needed information, or logically deducible from it, then the claim is true; otherwise, it is false.
+Here are some examples:
+[example 1 start]
+<input question>
+A shelf would fit in what part of a room?
+Here are the options:
+Option 1: garage
+Option 2: corner
+Please choose the correct option.
+
+<model-generated answer>
+Option 1
+
+<reference answer>
+Option 2
+
+<claim>
+The model-generated answer is wrong.
+
+<verify claim>
+To verify the claim, we need to consider the model-generated answer and the reference answer.
+The reference answer says that Option 2 is the correct choice.
+The model-generated answer states that the answer is Option 1. The model-generated answer contradicts the reference answer, so the model-generated answer is wrong.
+The claim states that the model-generated answer is wrong. The claim is consistent with the above analysis result. Therefore, the claim is true.
+[example 1 end]
+[example 2 start]
+<input question>
+Give a summary of the below article:
+Biggin Hill Airport wants to increase bank holiday and weekend opening times to increase the number of flights. Director William Curtis said he feared the airport could be asked to help the UK meet increased demand for air travel if the extension was not granted.
+
+<model-generated answer>
+Biggin Hill Airport intends to expand its hours to accommodate more flights.
+
+<reference answer>
+Biggin Hill Airport seeks to extend opening times to boost flights amidst concerns of meeting UK air travel demand.
+
+<claim>
+William Curtis wants to increase opening hours.
+
+<verify claim>
+To verify the claim, we need to consider the input question.
+The input question says that Biggin Hill Airport wants to increase opening times instead of William Curtis.
+The claim states that William Curtis wants to increase opening hours. The claim contradicts with the above reasoning result. Therefore, the claim is false.
+[example 2 end]
+[example 3 start]
+<input question>
+Context:
+He walked in the door and saw her pointing a gun with a laser pointer at his chest.
+
+Given the above context, How did he feel?
+
+<model-generated answer>
+He was glad.
+
+<reference answer>
+He was scared for his life.
+
+<claim>
+The correct answer is that he was afraid.
+
+<verify claim>
+To verify the claim, we need to consider the reference answer.
+The reference answer states that he was scared for his life, which is synonymous with being afraid.
+The claim states that the correct answer is that he was afraid. The claim is consistent with the above reasoning result. Therefore, the claim is true.
+[example 3 end]
+[example 4 start]
+<input question>
+Here is a premise:
+A black and white dog sliding down a slope on a beach.
+
+Here is a hypothesis:
+A dog going uphill to the beach.
+
+Does this premise imply the hypothesis? Please justify your answer:
+
+<model-generated answer>
+No, the dog could have been sliding down any slope, not just a sandy beach.
+
+<reference answer>
+No. The premise states that the dog is sliding down a slope on a beach, which indicates a downward movement.
+The hypothesis suggests that the dog is going uphill to the beach, which indicates an upward movement.
+These two scenarios are contradictory, so the premise does not support or imply the hypothesis.
+
+<claim>
+The model-generated answer provides a clear and concise explanation.
+
+<verify claim>
+To verify the claim, we need to consider the model-generated answer and the reference answer.
+The model-generated answer states that the reason is that the dog could have been sliding down any slope. However, it does not mention the direction of the dog's movement, which is the main point of contradiction.
+The claim states that the model-generated answer provides a clear and concise explanation. The claim contradicts with the above reasoning result. Therefore, the claim is false.
+[example 4 end]
