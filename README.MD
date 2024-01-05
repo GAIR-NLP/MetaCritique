@@ -29,7 +29,6 @@ Here is an example:
 ## Leaderboard
 We release the benchmarking results of multiple critique models.
 
-
 | Critique Model                                                                     | Meta-Precision | Meta-Recall  | Meta-F1 score |
 |---------------------------------------------------------------------------|--| ---- | ---- |
 | [AUTO-J](https://github.com/GAIR-NLP/auto-j)                                          | <u>76.43</u> | **70.65**  | **71.14** |
@@ -108,6 +107,7 @@ python codes/cal_meta_scores.py --data output/hypothesis_eval_data.json --precis
 ```
 
 ## Data
+
 Annotation Data is the meta-evaluation dataset with human annotation.
 
 Benchmark Data is used for leaderboard, including question, model-generated answer, reference answer, reference critique and AIUs from reference critique.
