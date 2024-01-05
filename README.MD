@@ -24,7 +24,7 @@ Meta-F1: overall rating that is harmonic mean of precision score and recall scor
 
 Here is an example:
 
-<img src="./figs/example.pdf" style="zoom: 75%;" />
+<img src="figs/example.png" style="zoom: 75%;" />
 
 ## Leaderboard
 We release the benchmarking results of multiple critique models.
