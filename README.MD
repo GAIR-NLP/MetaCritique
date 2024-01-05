@@ -17,18 +17,14 @@ This is the official repository for [**The Critique of Critique**](https://arxiv
 We introduce **MetaCritique**, a new judge that can effectively evaluate human-written or LLMs-generated critique by generating critique. 
 
 Meta-P: precision score of MetaCritique that evaluates **factuality** of hypothesis critique.
-
 Meta-R: recall score of MetaCritique that evaluates **comprehensiveness** of hypothesis critique.
-
 Meta-F1: overall rating that is harmonic mean of precision score and recall score.
 
 Here is an example:
-
-<img src="figs/example.png" style="zoom: 75%;" />
+<img src="figs/example.png" style="zoom: 70%;" />
 
 ## Leaderboard
 We release the benchmarking results of multiple critique models.
-
 
 | Critique Model                                                                     | Meta-Precision | Meta-Recall  | Meta-F1 score |
 |---------------------------------------------------------------------------|--| ---- | ---- |
@@ -44,7 +40,6 @@ Our implementation is based on GPT-4, so you should config your openai API in th
 ### Setup
 
 You are encouraged to create a virtual environment through `conda`.
-
 Then, we have to install all the libraries listed in `requirements.txt`. 
 
 ```bash
@@ -53,11 +48,8 @@ pip install -r requirements.txt
 
 ### Usage
 We provide two options to run MetaCritique evaluation.
-
 Option 1: If you can stably use OpenAI api, we provide a one-step version of MetaCritique.
-
-Option 2: If you cannot stably use OpenAI api, we provide a step-by-step version of MetaCritique with cache. When you fail in middle step, you can restart your code and continue to calculate MetaCritique scores. 
-
+Option 2: If you cannot stably use OpenAI api, we provide a step-by-step version of MetaCritique with cache. When you fail in middle step, you can restart your code and continue to calculate MetaCritique scores.
 Our benchmark_data.json provides reference answer and reference critique with aius extracted by GPT-4, so you can skip step 1-3. We also provide a test hypothesis critique in eval_data/hypothesis_critique.json.
 
 ### Option 1: Calculate MetaCritique scores in one line
@@ -109,13 +101,11 @@ python codes/cal_meta_scores.py --data output/hypothesis_eval_data.json --precis
 
 ## Data
 Annotation Data is the meta-evaluation dataset with human annotation.
-
 Benchmark Data is used for leaderboard, including question, model-generated answer, reference answer, reference critique and AIUs from reference critique.
 
 ## Citation
 
 If you find our work useful or use MathPile, please cite our paper:
-
 ```
 @article{sun2024metacritique,
       
