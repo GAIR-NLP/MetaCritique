@@ -38,7 +38,7 @@ We release the benchmarking results of multiple critique models.
 | [SelFee](https://github.com/kaistAI/SelFee)                                           | 69.56  |  51.05  |  54.22 |
 
 ## Quick Start
-Our implementation is based on GPT-4, so you should config your openai API in the file (codes/openai_config.py).
+Our implementation is based on GPT-4, so you should config your openai API in the file (meta_critique/openai_config.py).
 
 ### Setup
 
@@ -61,49 +61,49 @@ Our benchmark_data.json provides reference answer and reference critique with ai
 
 ### Option 1: Calculate MetaCritique scores in one line
 ```
-python codes/meta_critique.py --benchmark_data data/benchmark_data.json --hyp_critique eval_data/hypothesis_critique.json --out output/hypothesis_eval_results.json
+python meta_critique/meta_critique.py --benchmark_data data/benchmark_data.json --hyp_critique eval_data/hypothesis_critique.json --out output/hypothesis_eval_results.json
 ```
 
 ### Option 2: Calculate MetaCritique scores step by step
 
 #### 1. generate reference answer
 ```
-python codes/generate_ref_answer.py --data data/benchmark_data.json --out output/ref_answer.json
+python meta_critique/generate_ref_answer.py --data data/benchmark_data.json --out output/ref_answer.json
 ```
 
 #### 2. generate reference critique
 ```
-python codes/generate_ref_critique.py --data data/benchmark_data.json --out output/ref_critique.json
+python meta_critique/generate_ref_critique.py --data data/benchmark_data.json --out output/ref_critique.json
 ```
 
 #### 3. extract aius of reference critique
 ```
-python codes/extracting_aius_for_critique.py --data output/ref_critique.json --critique output --out output/reference_aius.json
+python meta_critique/extracting_aius_for_critique.py --data output/ref_critique.json --critique output --out output/reference_aius.json
 ```
 
 #### 4. extract aius of hypothesis critique
 ```
-python codes/extracting_aius_for_critique.py --data eval_data/hypothesis_critique.json --critique output --out output/hypothesis_aius.json
+python meta_critique/extracting_aius_for_critique.py --data eval_data/hypothesis_critique.json --critique output --out output/hypothesis_aius.json
 ```
 
 #### 5. merge all files into one
 ```
-python codes/merge_files.py --data data/benchmark_data.json --hyp_critique eval_data/hypothesis_critique.json --hyp_aius output/hypothesis_aius.json --out output/hypothesis_eval_data.json
+python meta_critique/merge_files.py --data data/benchmark_data.json --hyp_critique eval_data/hypothesis_critique.json --hyp_aius output/hypothesis_aius.json --out output/hypothesis_eval_data.json
 ```
 
 #### 6. conduct precision tasks
 ```
-python codes/evaluate_aiu_precision.py --data output/hypothesis_eval_data.json --out output/hypothesis_precision.json
+python meta_critique/evaluate_aiu_precision.py --data output/hypothesis_eval_data.json --out output/hypothesis_precision.json
 ```
 
 #### 7. conduct recall tasks
 ```
-python codes/evaluate_aiu_recall.py --data output/hypothesis_eval_data.json --out output/hypothesis_recall.json
+python meta_critique/evaluate_aiu_recall.py --data output/hypothesis_eval_data.json --out output/hypothesis_recall.json
 ```
 
 #### 8. calculate scores of precision, recall, f1_score 
 ```
-python codes/cal_meta_scores.py --data output/hypothesis_eval_data.json --precision output/hypothesis_precision.json --recall output/hypothesis_recall.json --out output/hypothesis_eval_results.json
+python meta_critique/cal_meta_scores.py --data output/hypothesis_eval_data.json --precision output/hypothesis_precision.json --recall output/hypothesis_recall.json --out output/hypothesis_eval_results.json
 ```
 
 ## Data

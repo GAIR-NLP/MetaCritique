@@ -12,10 +12,7 @@ def merge_outcomes(all_data, ref_answer, ref_critique, ref_aius, hyp_critique, h
                 data["gpt4_critique"] = {"critique": ref_critique[data_idx]["output"]}
 
         if ref_aius is not None:
-            if "gpt4_critique" in data:
-                data["gpt4_critique"]["aius"] = ref_aius[data_idx]["output"].strip().split("\n")
-            else:
-                data["gpt4_critique"] = {"aius": ref_aius[data_idx]["output"].strip().split("\n")}
+            data["gpt4_critique"]["aius"] = ref_aius[data_idx]["output"].strip().split("\n")
 
         if ref_answer is not None:
             data["gpt4_answer"] = ref_answer[data_idx]["output"]
