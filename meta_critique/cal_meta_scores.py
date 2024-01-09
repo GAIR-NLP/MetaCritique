@@ -1,4 +1,5 @@
 import argparse
+
 from utils import read_json, write_json
 
 
@@ -6,7 +7,7 @@ def f1_score(p, r):
     if p == 0 or r == 0:
         return 0
     else:
-        return 2 / (1/p + 1/r)
+        return 2 / (1 / p + 1 / r)
 
 
 def acc(pred):
@@ -29,25 +30,30 @@ def meta_score(all_data, precision, recall):
         r_len = len(data_item["gpt4_critique"]["aius"])
         p_end = p_start + p_len
         r_end = r_start + r_len
-        p = acc(precision_labels[p_start: p_end])
-        r = acc(recall_labels[r_start: r_end])
+        p = acc(precision_labels[p_start:p_end])
+        r = acc(recall_labels[r_start:r_end])
         f1 = f1_score(p, r)
         precision_scores.append(p)
         recall_scores.append(r)
         f1_scores.append(f1)
         p_start, r_start = p_end, r_end
     data_len = len(all_data)
-    return sum(precision_scores) / data_len, sum(recall_scores) / data_len, sum(f1_scores) / data_len
+    return (
+        sum(precision_scores) / data_len,
+        sum(recall_scores) / data_len,
+        sum(f1_scores) / data_len,
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--data",
         default=None,
         type=str,
         required=True,
-        help="The evaluation data with reference answer, reference critique and their aius in json format.",
+        help="The evaluation data with reference answer,"
+        " reference critique and their aius in json format.",
     )
 
     parser.add_argument(

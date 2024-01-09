@@ -1,8 +1,11 @@
-from utils import read_json, write_json
 import argparse
 
+from utils import read_json, write_json
 
-def merge_outcomes(all_data, ref_answer, ref_critique, ref_aius, hyp_critique, hyp_aius):
+
+def merge_outcomes(
+    all_data, ref_answer, ref_critique, ref_aius, hyp_critique, hyp_aius
+):
     outputs = []
     for data_idx, data in enumerate(all_data):
         if ref_critique is not None:
@@ -12,17 +15,22 @@ def merge_outcomes(all_data, ref_answer, ref_critique, ref_aius, hyp_critique, h
                 data["gpt4_critique"] = {"critique": ref_critique[data_idx]["output"]}
 
         if ref_aius is not None:
-            data["gpt4_critique"]["aius"] = ref_aius[data_idx]["output"].strip().split("\n")
+            data["gpt4_critique"]["aius"] = (
+                ref_aius[data_idx]["output"].strip().split("\n")
+            )
 
         if ref_answer is not None:
             data["gpt4_answer"] = ref_answer[data_idx]["output"]
 
-        data["hypothesis_critique"] = {"critique": hyp_critique[data_idx]["output"], "aius": hyp_aius[data_idx]["output"].strip().split("\n")}
+        data["hypothesis_critique"] = {
+            "critique": hyp_critique[data_idx]["output"],
+            "aius": hyp_aius[data_idx]["output"].strip().split("\n"),
+        }
         outputs.append(data)
     return outputs
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--data",
@@ -91,7 +99,8 @@ if __name__ == '__main__':
     hyp_critique = read_json(args.hyp_critique)
     hyp_aius = read_json(args.hyp_aius)
 
-    data_outputs = merge_outcomes(all_data, ref_answer, ref_critique, ref_aius, hyp_critique, hyp_aius)
+    data_outputs = merge_outcomes(
+        all_data, ref_answer, ref_critique, ref_aius, hyp_critique, hyp_aius
+    )
 
     write_json(data_outputs, args.out)
-

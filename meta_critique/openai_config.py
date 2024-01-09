@@ -8,9 +8,9 @@ class OpenaiConfig:
         self.api_key = None
         self.api_base = None
 
-        self.temperature = 0.
+        self.temperature = 0.0
         self.max_tokens = 512
-        self.top_p = 1.
+        self.top_p = 1.0
         self.frequency_penalty = 0
         self.presence_penalty = 0
         self.request_timeout = 120

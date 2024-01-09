@@ -1,22 +1,29 @@
-from utils import build_message, generate_outputs, OpenAIChat, read_json, read_txt
-from openai_config import OpenaiConfig
 import argparse
 
+from openai_config import OpenaiConfig
+from utils import build_message, generate_outputs, OpenAIChat, read_json, read_txt
 
-def extract_aius_for_critique(batched_openai_engine, all_data, sys_msg_file="prompts/extract_aius.txt", batch_size=5, cache_file="cache/critique_aius.json"):
+
+def extract_aius_for_critique(
+    batched_openai_engine,
+    all_data,
+    sys_msg_file="prompts/extract_aius.txt",
+    batch_size=5,
+    cache_file="cache/critique_aius.json",
+):
     sys_msg = read_txt(sys_msg_file)
     data_inputs = []
     for data in all_data:
-        cur_input = f"input:\n" \
-                    f"{data.strip()}\n" \
-                    f"claims:\n"
+        cur_input = f"input:\n" f"{data.strip()}\n" f"claims:\n"
         data_inputs.append(build_message(sys_msg, cur_input))
-    _, data_outputs = generate_outputs(data_inputs, batched_openai_engine, cache_file, batch_size, False)
+    _, data_outputs = generate_outputs(
+        data_inputs, batched_openai_engine, cache_file, batch_size, False
+    )
 
     return data_outputs
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--data",
@@ -42,12 +49,29 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     config = OpenaiConfig()
-    batched_openai_engine = OpenAIChat(api_key=config.api_key, api_base=config.api_base, org_id=config.org_id, model=config.model_type, seed=config.seed, temperature=config.temperature, max_tokens=config.max_tokens, top_p=config.top_p, frequency_penalty=config.frequency_penalty, presence_penalty=config.presence_penalty, request_timeout=config.request_timeout)
+    batched_openai_engine = OpenAIChat(
+        api_key=config.api_key,
+        api_base=config.api_base,
+        org_id=config.org_id,
+        model=config.model_type,
+        seed=config.seed,
+        temperature=config.temperature,
+        max_tokens=config.max_tokens,
+        top_p=config.top_p,
+        frequency_penalty=config.frequency_penalty,
+        presence_penalty=config.presence_penalty,
+        request_timeout=config.request_timeout,
+    )
 
     all_data = read_json(args.data)
     ref_critiques = []
     for data in all_data:
         ref_critiques.append(data[args.critique])
 
-    data_outputs = extract_aius_for_critique(batched_openai_engine, ref_critiques, sys_msg_file="prompts/extract_aius.txt", batch_size=5, cache_file=args.out)
-
+    data_outputs = extract_aius_for_critique(
+        batched_openai_engine,
+        ref_critiques,
+        sys_msg_file="prompts/extract_aius.txt",
+        batch_size=5,
+        cache_file=args.out,
+    )
