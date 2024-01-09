@@ -1,13 +1,21 @@
 import argparse
+import os
+import pathlib
 
-from openai_config import OpenaiConfig
-from utils import build_message, generate_outputs, OpenAIChat, read_json, read_txt
+from meta_critique.openai_config import OpenaiConfig
+from meta_critique.utils import (
+    build_message,
+    generate_outputs,
+    OpenAIChat,
+    read_json,
+    read_txt,
+)
 
 
 def extract_aius_for_critique(
     batched_openai_engine,
     all_data,
-    sys_msg_file="prompts/extract_aius.txt",
+    sys_msg_file="meta_critique/prompts/extract_aius.txt",
     batch_size=5,
     cache_file="cache/critique_aius.json",
 ):
@@ -67,11 +75,12 @@ if __name__ == "__main__":
     ref_critiques = []
     for data in all_data:
         ref_critiques.append(data[args.critique])
+    prompts_path = os.path.join(os.path.dirname(pathlib.Path(__file__)), "prompts/")
 
     data_outputs = extract_aius_for_critique(
         batched_openai_engine,
         ref_critiques,
-        sys_msg_file="prompts/extract_aius.txt",
+        sys_msg_file=os.path.join(prompts_path, "extract_aius.txt"),
         batch_size=5,
         cache_file=args.out,
     )

@@ -1,13 +1,21 @@
 import argparse
+import os
+import pathlib
 
-from openai_config import OpenaiConfig
-from utils import build_message, generate_outputs, OpenAIChat, read_json, read_txt
+from meta_critique.openai_config import OpenaiConfig
+from meta_critique.utils import (
+    build_message,
+    generate_outputs,
+    OpenAIChat,
+    read_json,
+    read_txt,
+)
 
 
 def generate_ref_critique(
     batched_openai_engine,
     all_data,
-    sys_msg_file="prompts/reference_critique.txt",
+    sys_msg_file="meta_critique/prompts/reference_critique.txt",
     batch_size=5,
     cache_file="cache/ref_critique.json",
 ):
@@ -63,11 +71,12 @@ if __name__ == "__main__":
     )
 
     all_data = read_json(args.data)
+    prompts_path = os.path.join(os.path.dirname(pathlib.Path(__file__)), "prompts/")
 
     data_outputs = generate_ref_critique(
         batched_openai_engine,
         all_data,
-        sys_msg_file="prompts/reference_critique.txt",
+        sys_msg_file=os.path.join(prompts_path, "reference_critique.txt"),
         batch_size=5,
         cache_file=args.out,
     )

@@ -1,15 +1,16 @@
 import argparse
-import os.path
+import os
+import pathlib
 
-from cal_meta_scores import meta_score
-from evaluate_aiu_precision import eval_aiu_precision
-from evaluate_aiu_recall import eval_aiu_recall
-from extracting_aius_for_critique import extract_aius_for_critique
-from generate_ref_answer import generate_ref_answer
-from generate_ref_critique import generate_ref_critique
-from merge_files import merge_outcomes
-from openai_config import OpenaiConfig
-from utils import OpenAIChat, read_json, write_json
+from meta_critique.cal_meta_scores import meta_score
+from meta_critique.evaluate_aiu_precision import eval_aiu_precision
+from meta_critique.evaluate_aiu_recall import eval_aiu_recall
+from meta_critique.extracting_aius_for_critique import extract_aius_for_critique
+from meta_critique.generate_ref_answer import generate_ref_answer
+from meta_critique.generate_ref_critique import generate_ref_critique
+from meta_critique.merge_files import merge_outcomes
+from meta_critique.openai_config import OpenaiConfig
+from meta_critique.utils import OpenAIChat, read_json, write_json
 
 
 class MetaCritique:
@@ -42,6 +43,9 @@ class MetaCritique:
             presence_penalty=cur_config.presence_penalty,
             request_timeout=cur_config.request_timeout,
         )
+        self.prompts_path = os.path.join(
+            os.path.dirname(pathlib.Path(__file__)), "prompts/"
+        )
 
     def score(self, input_list):
         assert len(input_list) > 0
@@ -55,7 +59,7 @@ class MetaCritique:
             ref_answers = generate_ref_answer(
                 self.batched_openai_engine,
                 input_list,
-                sys_msg_file="prompts/reference_answer.txt",
+                sys_msg_file=os.path.join(self.prompts_path, "reference_answer.txt"),
                 batch_size=self.batch_size,
                 cache_file=os.path.join(self.cache_dir, "ref_answer.json"),
             )
@@ -78,7 +82,7 @@ class MetaCritique:
             ref_critiques = generate_ref_critique(
                 self.batched_openai_engine,
                 input_list,
-                sys_msg_file="prompts/reference_critique.txt",
+                sys_msg_file=os.path.join(self.prompts_path, "reference_critique.txt"),
                 batch_size=self.batch_size,
                 cache_file=os.path.join(self.cache_dir, "ref_critique.json"),
             )
@@ -99,7 +103,7 @@ class MetaCritique:
             ref_aius = extract_aius_for_critique(
                 self.batched_openai_engine,
                 ref_critique_list,
-                sys_msg_file="prompts/extract_aius.txt",
+                sys_msg_file=os.path.join(self.prompts_path, "extract_aius.txt"),
                 batch_size=self.batch_size,
                 cache_file=os.path.join(self.cache_dir, "ref_aius.json"),
             )
@@ -113,7 +117,7 @@ class MetaCritique:
         hyp_aius = extract_aius_for_critique(
             self.batched_openai_engine,
             hyp_critique_list,
-            sys_msg_file="prompts/extract_aius.txt",
+            sys_msg_file=os.path.join(self.prompts_path, "extract_aius.txt"),
             batch_size=self.batch_size,
             cache_file=os.path.join(self.cache_dir, "hyp_aius.json"),
         )
@@ -127,7 +131,7 @@ class MetaCritique:
         precision_outputs = eval_aiu_precision(
             self.batched_openai_engine,
             input_list,
-            sys_msg_file="prompts/precision.txt",
+            sys_msg_file=os.path.join(self.prompts_path, "precision.txt"),
             batch_size=self.batch_size,
             cache_file=os.path.join(self.cache_dir, "hypothesis_precision.json"),
         )
@@ -136,7 +140,7 @@ class MetaCritique:
         recall_outputs = eval_aiu_recall(
             self.batched_openai_engine,
             input_list,
-            sys_msg_file="prompts/recall.txt",
+            sys_msg_file=os.path.join(self.prompts_path, "recall.txt"),
             batch_size=self.batch_size,
             cache_file=os.path.join(self.cache_dir, "hypothesis_recall.json"),
         )
@@ -193,14 +197,15 @@ def add_args(parser):
 
 
 def evaluate(args, batched_openai_engine):
-    precision_score, recall_score, f1_score = 0, 0, 0
+    prompts_path = os.path.join(os.path.dirname(pathlib.Path(__file__)), "prompts/")
+
     hyp_critique = read_json(args.hyp_critique)
     hyp_critique_list = [i["output"] for i in hyp_critique]
     print("extracting aius from hypothesis critique ...")
     hyp_aius = extract_aius_for_critique(
         batched_openai_engine,
         hyp_critique_list,
-        sys_msg_file="prompts/extract_aius.txt",
+        sys_msg_file=os.path.join(prompts_path, "extract_aius.txt"),
         batch_size=5,
         cache_file=os.path.join(args.cache_dir, "hyp_aius.json"),
     )
@@ -216,7 +221,7 @@ def evaluate(args, batched_openai_engine):
         ref_answer = generate_ref_answer(
             batched_openai_engine,
             question_data,
-            sys_msg_file="prompts/reference_answer.txt",
+            sys_msg_file=os.path.join(prompts_path, "reference_answer.txt"),
             batch_size=5,
             cache_file=os.path.join(args.cache_dir, "ref_answer.json"),
         )
@@ -224,7 +229,7 @@ def evaluate(args, batched_openai_engine):
         ref_critique = generate_ref_critique(
             batched_openai_engine,
             question_data,
-            sys_msg_file="prompts/reference_critique.txt",
+            sys_msg_file=os.path.join(prompts_path, "reference_critique.txt"),
             batch_size=5,
             cache_file=os.path.join(args.cache_dir, "ref_critique.json"),
         )
@@ -233,7 +238,7 @@ def evaluate(args, batched_openai_engine):
         ref_aius = extract_aius_for_critique(
             batched_openai_engine,
             ref_critique_list,
-            sys_msg_file="prompts/extract_aius.txt",
+            sys_msg_file=os.path.join(prompts_path, "extract_aius.txt"),
             batch_size=5,
             cache_file=os.path.join(args.cache_dir, "ref_aius.json"),
         )
@@ -247,7 +252,7 @@ def evaluate(args, batched_openai_engine):
     precision_outputs = eval_aiu_precision(
         batched_openai_engine,
         all_data,
-        sys_msg_file="prompts/precision.txt",
+        sys_msg_file=os.path.join(prompts_path, "precision.txt"),
         batch_size=5,
         cache_file=os.path.join(args.cache_dir, "hypothesis_precision.json"),
     )
@@ -255,7 +260,7 @@ def evaluate(args, batched_openai_engine):
     recall_outputs = eval_aiu_recall(
         batched_openai_engine,
         all_data,
-        sys_msg_file="prompts/recall.txt",
+        sys_msg_file=os.path.join(prompts_path, "recall.txt"),
         batch_size=5,
         cache_file=os.path.join(args.cache_dir, "hypothesis_recall.json"),
     )

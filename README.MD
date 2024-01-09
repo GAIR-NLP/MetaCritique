@@ -6,10 +6,9 @@ This is the official repository for [**The Critique of Critique**](https://arxiv
 ## Table of contents
 - [Introduction](#Introduction)
 - [Leaderboard](#leaderboard)
-- [Installation](#installation)
 - [Quick Start](#quick-start)
-  - [Setup](#setup)
-  - [Usage](#usage)
+  - [General Usage](#general-usage)
+  - [Developer Usage](#developer-usage)
 - [Data](#data)
 - [Citation](#citation)
 
@@ -17,9 +16,11 @@ This is the official repository for [**The Critique of Critique**](https://arxiv
 ## Introduction
 We introduce **MetaCritique**, a new judge that can effectively evaluate human-written or LLMs-generated critique by generating critique. 
 
-Meta-P: precision score of MetaCritique that evaluates **factuality** of hypothesis critique.
-Meta-R: recall score of MetaCritique that evaluates **comprehensiveness** of hypothesis critique.
-Meta-F1: overall rating that is harmonic mean of precision score and recall score.
+**Meta-P**: precision score of MetaCritique that evaluates **factuality** of hypothesis critique.
+
+**Meta-R**: recall score of MetaCritique that evaluates **comprehensiveness** of hypothesis critique.
+
+**Meta-F1**: overall rating that is harmonic mean of precision score and recall score.
 
 Here is an example:
 <img src="figs/example.png" style="zoom: 70%;" />
@@ -35,26 +36,15 @@ We release the benchmarking results of multiple critique models.
 | [Human Critique from Shepherd](https://github.com/facebookresearch/Shepherd)          | **83.19** | 60.65   |  64.02   |
 | [SelFee](https://github.com/kaistAI/SelFee)                                           | 69.56  |  51.05  |  54.22 |
 
-## Installation
+## Quick Start
+### General Usage
 
-* #### For General User
-
+#### Installation
 ```bash
 pip install meta-critique
 ```
 
-
-* #### For Developer
-
-```bash
-git clone git@github.com:GAIR-NLP/MetaCritique.git
-cd MetaCritique
-pip install -e .
-``` 
- 
-
-## Quick Start
-### General Usage
+#### Usage
 ```python
 from meta_critique import MetaCritique
 api_key = ...  # here is your OpenAi key
@@ -82,22 +72,32 @@ where
 * `reference_critique`: (Optional) The reference critique.
   * str: a critique text
   * dict: {"critique": <reference_critique>, "aius": <optional_aius_from_reference_critique>}
+
 You can find a test sample from eval_examples/test_samples.json
 
 ### Developer Usage
-Our implementation is based on GPT-4, so you should config your openai API in the file (meta_critique/openai_config.py).
-
-We provide two options to run MetaCritique evaluation.
-Option 1: If you can stably use OpenAI api, we provide a one-step version of MetaCritique.
-Option 2: If you cannot stably use OpenAI api, we provide a step-by-step version of MetaCritique with cache. When you fail in middle step, you can restart your code and continue to calculate MetaCritique scores.
-
 #### Setup
 You are encouraged to create a virtual environment through `conda`.
+```bash
+conda create -n your_env_name python==3.9
+conda activate your_env_name
+git clone git@github.com:GAIR-NLP/MetaCritique.git
+cd MetaCritique
+```
 Then, we have to install all the libraries listed in `requirements.txt`. 
 
 ```bash
 pip install -r requirements.txt
 ```
+#### Usage
+Our implementation is based on GPT-4, so you should config your openai API in the file (meta_critique/openai_config.py).
+
+We provide two options to run MetaCritique evaluation.
+
+Option 1: If you can stably use OpenAI api, we provide a one-step version of MetaCritique.
+
+Option 2: If you cannot stably use OpenAI api, we provide a step-by-step version of MetaCritique with cache. 
+When you fail in middle step, you can restart your code and continue to calculate MetaCritique scores.
 
 #### Option 1: Calculate MetaCritique scores in one line
 ```
@@ -154,6 +154,7 @@ python meta_critique/cal_meta_scores.py --data output/hypothesis_eval_data.json 
 ## Data
 
 Annotation Data is the meta-evaluation dataset with human annotation.
+
 Benchmark Data is used for leaderboard, including question, model-generated answer, reference answer, reference critique and AIUs from reference critique.
 
 ## Citation
