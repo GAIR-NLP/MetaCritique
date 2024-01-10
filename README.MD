@@ -1,6 +1,6 @@
 # The Critique of Critique
 
-This is the official repository for [**The Critique of Critique**](https://arxiv.org/abs/).
+This is the official repository for [**The Critique of Critique**](https://arxiv.org/abs/2401.04518).
 
 
 ## Table of contents
@@ -159,10 +159,13 @@ Benchmark Data is used for leaderboard, including question, model-generated answ
 
 ## Citation
 
-If you find our work useful or use MathPile, please cite our paper:
+If you find our work useful or use MetaCritique, please cite our paper:
 ```
 @article{sun2024metacritique,
-      
+  title={The Critique of Critique},
+  author={Shichao Sun, Junlong Li, Weizhe Yuan, Ruifeng Yuan, Wenjie Li, Pengfei Liu},
+  journal={arXiv preprint arXiv:2401.04518},
+  year={2024}
 }
 ```
 

@@ -1,1 +1,2 @@
 recursive-include meta_critique/prompts *
+include version.py
