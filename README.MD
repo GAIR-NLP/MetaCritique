@@ -163,9 +163,10 @@ If you find our work useful or use MetaCritique, please cite our paper:
 ```
 @article{sun2024metacritique,
   title={The Critique of Critique},
-  author={Shichao Sun, Junlong Li, Weizhe Yuan, Ruifeng Yuan, Wenjie Li, Pengfei Liu},
+  author={Shichao Sun and Junlong Li and Weizhe Yuan and Ruifeng Yuan and Wenjie Li and Pengfei Liu},
   journal={arXiv preprint arXiv:2401.04518},
-  year={2024}
+  year={2024},
+  url={https://arxiv.org/abs/2401.04518}
 }
 ```
 
