@@ -2,6 +2,8 @@
 
 This is the official repository for [**The Critique of Critique**](https://arxiv.org/abs/2401.04518).
 
+## News
+- [2024/05/15] Our paper has been accepted to Findings of ACL 2024! 🎉
 
 ## Table of contents
 - [Introduction](#Introduction)
